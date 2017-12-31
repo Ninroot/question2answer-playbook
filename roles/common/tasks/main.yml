@@ -1,0 +1,6 @@
+---
+- name: Ensure common dependencies are installed
+  apt:
+    name:
+      - unzip
+    state: installed

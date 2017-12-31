@@ -1,0 +1,12 @@
+---
+- name: Ensure apache2 and q2a dependencies are installed
+  apt:
+    name:
+      - apache2
+      - php-mysql
+      - php-gd
+      - php-mbstring
+      - libapache2-mod-php
+    state: installed
+  update_cache: yes
+  notify: restart apache2

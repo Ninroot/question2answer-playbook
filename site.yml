@@ -1,0 +1,12 @@
+---
+- name: Install Q2A
+  hosts: all
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  roles:
+    - common
+    - apache2
+    - mysql
+    - q2a

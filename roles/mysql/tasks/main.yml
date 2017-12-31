@@ -1,0 +1,11 @@
+---
+- name: Install MySQL
+  apt:
+    name:
+      - python-mysqldb
+      - mysql-server
+    state: installed
+  update_cache: yes
+  
+- name: Start Mysql Service
+  service: name=mysql state=started enabled=yes

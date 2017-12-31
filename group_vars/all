@@ -1,0 +1,8 @@
+---
+# Question2answer version (please ensure it exists first https://github.com/q2a/question2answer/releases)
+q2a_version: 1.7.5
+
+# Question2answer database configuration (please change your password)
+q2a_db_name: q2a
+q2a_db_user: q2a
+q2a_db_password: changeMePlease!

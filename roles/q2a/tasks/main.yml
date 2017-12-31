@@ -1,0 +1,47 @@
+---
+- name: Delete Apache2 file example
+  file:
+    path: /var/www/html/index.html
+    state: absent
+
+- name: Download and unarchive Q2A
+  unarchive:
+    src: https://github.com/q2a/question2answer/archive/v{{ q2a_version }}.tar.gz
+    dest: /var/www/html/
+    remote_src: yes
+    extra_opts: [--strip-components=1]
+  sudo: yes
+  sudo_user: www-data
+
+- name: Create Q2A database
+  mysql_db: name={{ q2a_db_name }} state=present
+
+- name: Create Q2A database user
+  mysql_user: name={{ q2a_db_user }} password={{ q2a_db_password }} priv={{ q2a_db_name }}.*:ALL host='localhost' state=present
+
+- name: Rename the configuration file
+  copy:
+    src: /var/www/html/qa-config-example.php
+    dest: /var/www/html/qa-config.php
+    remote_src: yes
+
+- name: Replace
+  replace:
+    path: /var/www/html/qa-config.php
+    regexp: 'your-mysql-username'
+    replace: '{{ q2a_db_user }}'
+    backup: no
+
+- name: Replace
+  replace:
+    path: /var/www/html/qa-config.php
+    regexp: 'your-mysql-password'
+    replace: '{{ q2a_db_password }}'
+    backup: no
+
+- name: Replace
+  replace:
+    path: /var/www/html/qa-config.php
+    regexp: 'your-mysql-db-name'
+    replace: '{{ q2a_db_name }}'
+    backup: no
